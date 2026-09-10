@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-09-10T06:43:46.134012Z",
+  "categories": {
+    "index_fund": {
+      "label": "Nifty 50 Index Fund (category average)",
+      "schemes_matched_today": 0,
+      "schemes_with_enough_history": 0,
+      "avg_1yr_cagr": null,
+      "basis": "insufficient_live_history_yet"
+    },
+    "elss": {
+      "label": "ELSS Mutual Fund (category average)",
+      "schemes_matched_today": 0,
+      "schemes_with_enough_history": 0,
+      "avg_1yr_cagr": null,
+      "basis": "insufficient_live_history_yet"
+    }
+  }
+}
