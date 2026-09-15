@@ -1,1 +1,48 @@
-.github/workflows/daily-refresh.yml
+name: Daily data refresh
+
+on:
+  schedule:
+    # Run daily at 03:00 UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run currency ingestion
+        run: python currency_ingest.py
+        continue-on-error: true
+      
+      - name: Run news ingestion
+        run: python news_ingest.py
+        continue-on-error: true
+      
+      - name: Run learning ingestion
+        run: python learning_ingest.py
+        continue-on-error: true
+      
+      - name: Run AMFI ingestion
+        run: python amfi_ingest.py
+        continue-on-error: true
+      
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-refresh data files"
+          git push
+        continue-on-error: true
